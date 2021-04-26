@@ -1,11 +1,22 @@
 export interface Answer {
   choice: string;
   address?: string;
+  tx_hash?: string;
+  tx_type?: TransactionTypeChoices;
+  destination_address?: string;
+  amount?: string;
+  currency?: string;
+  secret?: string;
 }
 
 export interface Choice {
   name: string;
-  value: BeginningChoices | LedgerChoices | AccountChoices;
+  value:
+    | BeginningChoices
+    | LedgerChoices
+    | AccountChoices
+    | TransactionChoices
+    | TransactionTypeChoices;
 }
 
 export enum BeginningChoices {
@@ -38,4 +49,17 @@ export enum AccountChoices {
   GatewayBalances = "GATEWAY BALANCES",
   NoRippleCheck = "NO RIPPLE CHECK",
   Exit = "EXIT"
+}
+
+export enum TransactionChoices {
+  Tx = "TX",
+  Submit = "SUBMIT",
+  Exit = "EXIT"
+}
+
+export enum TransactionTypeChoices {
+  AccountSet = "AccountSet",
+  AccountDelete = "AccountDelete",
+  Payment = "Payment",
+  TrustSet = "TrustSet"
 }

@@ -1,7 +1,7 @@
 {
-  "name": "rippled-api-cli",
+  "name": "xrpl-cli",
   "version": "1.0.0",
-  "description": "Use rippled api via cli",
+  "description": "Interact with the XRPL via CLI",
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
@@ -23,12 +23,14 @@
   "homepage": "https://github.com/florent-uzio/rippled-api-cli#readme",
   "dependencies": {
     "axios": "^0.21.1",
+    "figlet": "^1.5.0",
     "inquirer": "^8.0.0",
     "ripple-lib": "^1.9.3",
     "typescript": "^4.2.4",
     "vorpal": "^1.12.0"
   },
   "devDependencies": {
+    "@types/figlet": "^1.5.1",
     "@types/inquirer": "^7.3.1",
     "@types/node": "^14.14.37",
     "@types/vorpal": "^1.12.0",

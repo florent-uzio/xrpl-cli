@@ -15,6 +15,10 @@ export const beginningQuestion = async (): Promise<Answer> => {
       name: "Go to ledger methods",
       value: BeginningChoices.LedgerMethod
     },
+    {
+      name: "Go to transaction methods",
+      value: BeginningChoices.TransactionMethod
+    },
     { name: "Exit", value: BeginningChoices.Exit }
   ];
 

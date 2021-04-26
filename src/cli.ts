@@ -4,16 +4,24 @@ import {
   fee,
   server_info,
   account_info,
-  account_objects
+  account_objects,
+  tx
 } from "./api";
 import {
   AccountChoices,
   Answer,
   BeginningChoices,
-  LedgerChoices
+  LedgerChoices,
+  TransactionChoices,
+  TransactionTypeChoices
 } from "./models/answer-choice";
-import { beginningQuestion, ledgerQuestion } from "./questions";
+import {
+  beginningQuestion,
+  ledgerQuestion,
+  transactionQuestion
+} from "./questions";
 import { accountQuestion } from "./questions/account";
+import { Transaction } from "./transaction";
 
 export class CLI {
   api: RippleAPI;
@@ -45,6 +53,15 @@ export class CLI {
         let ledgerAnswer: Answer = await ledgerQuestion();
 
         await this.actOnLedgerMethodChoice(ledgerAnswer);
+        break;
+      }
+
+      case BeginningChoices.TransactionMethod: {
+        let transactionAnswer: Answer = await transactionQuestion(this.api);
+
+        await this.actOnTransactionMethodChoice(transactionAnswer);
+
+        await this.actOnLedgerMethodChoice(transactionAnswer);
         break;
       }
 
@@ -135,6 +152,104 @@ export class CLI {
 
       default: {
         await this.disconnectApi();
+      }
+    }
+  }
+
+  private async actOnTransactionMethodChoice(
+    transactionAnswer: Answer
+  ): Promise<void> {
+    switch (transactionAnswer.choice) {
+      case TransactionChoices.Tx: {
+        if (transactionAnswer.tx_hash) {
+          const transaction = await tx(transactionAnswer.tx_hash, this.api);
+          if (transaction && typeof transaction !== "undefined") {
+            console.log(transaction);
+          }
+        } else {
+          console.error("Transaction ID undefined");
+        }
+        this.restartCli();
+        break;
+      }
+
+      case TransactionChoices.Submit: {
+        switch (transactionAnswer.tx_type) {
+          case TransactionTypeChoices.Payment: {
+            // const transaction = new Transaction(
+            //   TransactionTypeChoices.Payment,
+            //   this.api
+            // );
+            // const preparedTxn = await transaction.prepareTransaction(
+            //   transactionAnswer.address!,
+            //   transactionAnswer.destination_address!,
+            //   transactionAnswer.amount!,
+            //   transactionAnswer.currency!
+            // );
+
+            // if (preparedTxn) {
+            //   const submittedTxn = await transaction.submitTransaction(
+            //     preparedTxn,
+            //     transactionAnswer.secret!
+            //   );
+            //   if (submittedTxn && typeof submittedTxn !== "undefined") {
+            //     console.log(submittedTxn);
+            //   }
+            // }
+
+            await this.prepareAndSubmit(
+              transactionAnswer,
+              TransactionTypeChoices.Payment
+            );
+
+            break;
+          }
+
+          case TransactionTypeChoices.TrustSet: {
+            await this.prepareAndSubmit(
+              transactionAnswer,
+              TransactionTypeChoices.TrustSet
+            );
+
+            break;
+          }
+        }
+
+        this.restartCli();
+        break;
+      }
+
+      default: {
+        await this.disconnectApi();
+      }
+    }
+  }
+
+  /**
+   * Prepare and submit a transaction
+   *
+   * @param transactionAnswer
+   * @param transactionType
+   */
+  private async prepareAndSubmit(
+    transactionAnswer: Answer,
+    transactionType: TransactionTypeChoices
+  ) {
+    const transaction = new Transaction(transactionType, this.api);
+    const preparedTxn = await transaction.prepareTransaction(
+      transactionAnswer.address!,
+      transactionAnswer.destination_address!,
+      transactionAnswer.amount!,
+      transactionAnswer.currency!
+    );
+
+    if (preparedTxn) {
+      const submittedTxn = await transaction.submitTransaction(
+        preparedTxn,
+        transactionAnswer.secret!
+      );
+      if (submittedTxn && typeof submittedTxn !== "undefined") {
+        console.log(submittedTxn);
       }
     }
   }
