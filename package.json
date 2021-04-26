@@ -1,0 +1,37 @@
+{
+  "name": "rippled-api-cli",
+  "version": "1.0.0",
+  "description": "Use rippled api via cli",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "rm -rf dist && tsc --project .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/florent-uzio/rippled-api-cli.git"
+  },
+  "keywords": [
+    "rippled"
+  ],
+  "author": "fuzio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/florent-uzio/rippled-api-cli/issues"
+  },
+  "homepage": "https://github.com/florent-uzio/rippled-api-cli#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "inquirer": "^8.0.0",
+    "ripple-lib": "^1.9.3",
+    "typescript": "^4.2.4",
+    "vorpal": "^1.12.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^7.3.1",
+    "@types/node": "^14.14.37",
+    "@types/vorpal": "^1.12.0",
+    "prettier": "^2.2.1"
+  }
+}
