@@ -8,6 +8,10 @@ export const beginningQuestion = async (): Promise<Answer> => {
       value: BeginningChoices.GenerateFaucetWallet
     },
     {
+      name: "Go to account methods",
+      value: BeginningChoices.AccountMethod
+    },
+    {
       name: "Go to ledger methods",
       value: BeginningChoices.LedgerMethod
     },

@@ -1,10 +1,11 @@
 export interface Answer {
   choice: string;
+  address?: string;
 }
 
 export interface Choice {
   name: string;
-  value: BeginningChoices | LedgerChoices;
+  value: BeginningChoices | LedgerChoices | AccountChoices;
 }
 
 export enum BeginningChoices {
@@ -23,5 +24,18 @@ export enum BeginningChoices {
 export enum LedgerChoices {
   Fee = "FEE",
   ServerInfo = "SERVER INFO",
+  Exit = "EXIT"
+}
+
+export enum AccountChoices {
+  AccountInfo = "ACCOUNT INFO",
+  AccountChannels = "ACCOUNT CHANNELS",
+  AccountCurrencies = "ACCOUNT CURRENCIES",
+  AccountLines = "ACCOUNT LINES",
+  AccountObjects = "ACCOUNT OBJECTS",
+  AccountOffers = "ACCOUNT OFFERS",
+  AccountTx = "ACCOUNT TX",
+  GatewayBalances = "GATEWAY BALANCES",
+  NoRippleCheck = "NO RIPPLE CHECK",
   Exit = "EXIT"
 }

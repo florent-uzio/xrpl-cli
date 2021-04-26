@@ -1,7 +1,8 @@
 import { RippleAPI } from "ripple-lib";
 import { CLI } from "./cli";
 
-const TESTNET_URL_WS = "wss://s1.ripple.com";
+// const MAINNET_URL_WS = "wss://s1.ripple.com";
+const TESTNET_URL_WS = "wss://s.altnet.rippletest.net/";
 
 const api = new RippleAPI({
   server: TESTNET_URL_WS
