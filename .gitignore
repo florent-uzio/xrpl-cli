@@ -1,0 +1,35 @@
+# Ignore compiled binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignore logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE or editor specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore node_modules directory for Node.js projects
+node_modules/
+
+# Ignore dependency directories
+vendor/
+
+# Ignore environment configuration files
+.env
+
+# Ignore compiled output of your code
+/build/
+
+# Ignore any files or directories specified in a .gitignore.local file
+.gitignore.local
